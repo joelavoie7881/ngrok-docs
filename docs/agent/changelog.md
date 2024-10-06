@@ -6,6 +6,46 @@ title: Changelog
 
 ## v3
 
+### ngrok Agent 3.16.1 - \[2024-10-03\]
+
+- Added windows arm64 agent binary.
+
+### ngrok Agent 3.16.0 - \[2024-09-09\]
+
+- Releasing the features originally released by 3.15.0
+  - Added `--url` agent CLI flag for creation of HTTP(S), TLS, and TCP protocol endpoints.
+  - Deprecated `--domain`, `--scheme`, and `--remote-addr` agent CLI flags, which have been replaced by `--url`.
+  - Added `--metadata` and `--description` agent CLI flags when using `--url`.
+  - Added `endpoints:` as a new field used for [endpoint creation](/docs/agent/config/v3/#full-example).
+  - A new `agent:` field has been added to the agent configuration format for V3.
+    - v3 supports _both_ tunnels and endpoints. Tunnels are now considered deprecated when using config v3.
+    - Some agent configuration fields have been renamed in v3.
+    - v2 is still supported, but does not support the new `endpoints:` , or `agent:` fields.
+  - Added support for [endpoint fields](/docs/api/resources/endpoints/#list-endpoints) in ngrok's `api`.
+- Update `config` commands to support new configuration version 3, including `upgrade`, `add-authtoken`, and `add-api-key`
+
+### ngrok Agent 3.15.1 - \[2024-08-29\]
+
+- Restores the functionality and compatibility for version 3.14.0 due to bugs in the previous release. An updated version with the changes from 3.15.0 will be released early next week.
+
+### \[UNSTABLE\] ngrok Agent 3.15.0 - \[2024-08-29\]
+
+- Added `--url` agent CLI flag for creation of HTTP(S), TLS, and TCP protocol endpoints.
+- Deprecated `--domain`, `--scheme`, and `--remote-addr` agent CLI flags, which have been replaced by `--url`.
+- Added `--metadata` and `--description` agent CLI flags when using `--url`.
+- Added `endpoints:` as a new field used for [endpoint creation](/docs/agent/config/v3/#full-example).
+- A new `agent:` field has been added to the agent configuration format for V3.
+  - v3 supports _both_ tunnels and endpoints. Tunnels are now considered deprecated when using config v3.
+  - Some agent configuration fields have been renamed in v3.
+  - v2 is still supported, but does not support the new `endpoints:` , or `agent:` fields.
+- Added support for [endpoint fields](/docs/api/resources/endpoints/#list-endpoints) in ngrok's `api`.
+
+### ngrok Agent 3.14.0 - \[2024-08-01\]
+
+- Added support for `traffic_policy` field in agent config for Traffic Policy configuration.
+- Deprecated `policy`
+- Added `EndpointTrafficPolicy` module to Edge API.
+
 ### ngrok Agent 3.13.0 - \[2024-07-15\]
 
 - In some cases, adds additional headers on error responses to ngrok that can be used to customize the content.
@@ -13,6 +53,8 @@ title: Changelog
 ### ngrok Agent 3.12.1 - \[2024-07-11\]
 
 - Fixed a bug in `ngrok diagnose` that would cause a panic if a server IP and the agent had TLS connectivity issues.
+- Added `--traffic-policy-file` flag that accepts Traffic Policy configuration for HTTP, TCP, or TLS traffic.
+- Deprecated `--policy-file` flag
 
 ### ngrok Agent 3.12.0 - \[2024-06-27\]
 
@@ -95,7 +137,7 @@ title: Changelog
 
 ### ngrok Agent 3.3.0 - \[2023-05-09\]
 
-- Added new default tunnel ingress names: the agent now connects to [`connect.ngrok-agent.com`](/guides/security-dev-productivity/#6-track-and-block-unauthorized-tunnel-activity) when starting a session
+- Added new default tunnel ingress names: the agent now connects to [`connect.ngrok-agent.com`](/guides/other-guides/security-dev-productivity/security-dev-productivity.md#6-track-and-block-unauthorized-tunnel-activity) when starting a session
 - Improved `ngrok diagnose` output to check that the DNS entry for `localhost` resolves
 - Added the command `ngrok config add-server-addr` for configuring custom agent ingresses
 - Re-wrote the tunnel and session backend to use the `ngrok-go` library
@@ -164,7 +206,7 @@ title: Changelog
 
 ### ngrok Agent 3.0.0 - \[2022-03-28\]
 
-For more information about upgrading from previous versions of the agent to v3.0, see our [upgrade guide](/guides/upgrade-v2-v3).
+For more information about upgrading from previous versions of the agent to v3.0, see our [upgrade guide](/guides/other-guides/upgrade-v2-v3.mdx).
 
 - Fixed an issue where an agent would not reconnect after removing a reserved domain from your account.
 - Added `ngrok completion` to enable autocomplete for the cli.

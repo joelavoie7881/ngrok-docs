@@ -1,6 +1,6 @@
 ---
-sidebar_position: 9
-title: Configure site-to-site connectivity to APIs on devices
+sidebar_position: 6
+title: Connect to APIs on devices
 description: Connect to APIs on devices.
 tags:
   - guides
@@ -12,7 +12,7 @@ tags:
 ---
 
 This guide provides step-by-step instructions for using ngrok as a device gateway.
-This example shows you how to securely run the ngrok agent at an external site to get access
+This example shows you how to securely run the ngrok agent to access
 to an API running on an IoT device. The connection will be end-to-end encrypted using mutual TLS (mTLS).
 
 For a deeper understanding for how mTLS is implemented within ngrok, reference the [Mutual TLS module
@@ -73,7 +73,7 @@ You should receive a `201` response similar to the following:
 {
 	"id": "agin_2esRkfoq4frGvOVUmfhytlr2zS3",
 	"uri": "/agent_ingresses/agin_2esRkfoq4frGvOVUmfhytlr2zS3",
-	"description": "Custom ingress address for site-to-site connectivity",
+	"description": "Custom ingress address",
 	"domain": "connect.configurable-domain.com",
 	"ns_targets": [
 		"ns-1329.awsdns-38.org",
@@ -128,7 +128,7 @@ create endpoints and receive traffic on any subdomain of your domain.
 
 For example, you might create `*.customer1.{YOUR_DOMAIN}`. You would then be able to create endpoints
 on `app.customer1.{YOUR_DOMAIN}` and `dev.customer1.{YOUR_DOMAIN}`. It can be helpful to create
-a separate subdomain for each customer site you wish to connect to.
+a separate subdomain for each site you wish to connect to.
 
 Run the following command, substituting your API key for `{API_KEY}` and your domain for `{YOUR_DOMAIN}`:
 
@@ -217,11 +217,11 @@ curl \
 -H "Authorization: Bearer {API_KEY}" \
 -H "Content-Type: application/json" \
 -H "Ngrok-Version: 2" \
--d '{DESCRIPTION}' \
+-d '{"name":"new bot user from API"}' \
 https://api.ngrok.com/bot_users
 ```
 
-You should receive a 201 response similar to the following:
+You should receive a `201` response similar to the following:
 
 ```json
 {
@@ -431,7 +431,7 @@ for `{PORT}`:
 curl \
 -H "Content-Type: application/json" -X  \
 POST https://agent.customer1.{YOUR_DOMAIN}/api/tunnels \
--d '{"name":"passthrough","proto":"tls","terminate_at": "agent", "addr":"{PORT}", "domain":"api.customer1.{YOUR_DOMAIN}","mutual_tls_cas":"ca-crt.pem", "crt":"client-crt.pem", "key":"server-key.pem"'
+-d '{"name":"passthrough","proto":"tls","terminate_at": "agent", "addr":"{PORT}", "domain":"api.customer1.{YOUR_DOMAIN}","mutual_tls_cas":"ca-crt.pem", "crt":"server-crt.pem", "key":"server-key.pem"}'
 ```
 
 Please note that these certificates should be used for testing purposes only. You should
